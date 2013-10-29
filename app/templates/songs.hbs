@@ -1,0 +1,12 @@
+<div class="slides">
+  {{#each controller}}
+    <section>
+      <h4>{{title}}</h4>
+      <section class="lyric">
+        {{#each lyric}}
+          <p>{{this}}</p>
+        {{/each}}
+      </section>
+    </section>
+  {{/each}}
+</div>
