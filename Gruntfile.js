@@ -60,6 +60,12 @@ module.exports = function (grunt) {
             options: {
               script: 'server/main.js',
             }
+          },
+          debug: {
+            options: {
+              script: 'server/main.js',
+              debug: true
+            }
           }
         },
         connect: {
@@ -285,11 +291,22 @@ module.exports = function (grunt) {
             return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
         }
 
+        if (target === 'debug') {
+          grunt.task.run([
+            'express:debug'
+          ]);  
+        }
+        else {
+          grunt.task.run([
+            'express:dev'
+          ]);  
+        }
+
         grunt.task.run([
-            'express:dev',
             'clean:server',
             'neuter:app',
-            'watch'
+            'watch',
+            'open'
         ]);
     });
 

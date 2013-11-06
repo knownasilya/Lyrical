@@ -1,13 +1,9 @@
 var mongodb = require('mongodb'),
+  conf = require('./config'),
   Db = mongodb.Db,
   Server = mongodb.Server,
   MongoClient = mongodb.MongoClient,
-  dbHost = process.env.MDB_DEV_HOST,
-  dbPort = process.env.MDB_DEV_PORT,
-  dbName = process.env.MDB_DEV_DB,
-  dbUser = process.env.MDB_DEV_USER,
-  dbPass = process.env.MDB_DEV_PASS,
-  server = new Server(dbHost, dbPort),
+  server = new Server(conf.db.host, conf.db.port),
   mongoClient = new MongoClient(server),
   store,
   // Models
@@ -15,11 +11,13 @@ var mongodb = require('mongodb'),
   Feature,
   User;
 
+console.dir(conf);
+
 // Open and Authenticate Database connection
 mongoClient.open(function (error, mongoClient) {
-  var db = mongoClient.db(dbName);
+  var db = mongoClient.db(conf.db.name);
 
-  db.authenticate(dbUser, dbPass, function (error) {
+  db.authenticate(conf.db.user, conf.db.pass, function (error) {
     if (error) {
       console.log('Error connecting to database: ' + error);
     }

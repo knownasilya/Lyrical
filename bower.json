@@ -6,9 +6,6 @@
     "ember-data-shim": "1.0.0-beta.2",
     "reveal.js": "~2.5.0"
   },
-  "resolutions": {
-    "ember": "1.0.0"
-  },
   "devDependencies": {
     "ember-mocha-adapter": "0.1.2"
   }
