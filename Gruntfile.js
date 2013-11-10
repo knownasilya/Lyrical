@@ -32,10 +32,12 @@ module.exports = function (grunt) {
                 files: '<%= yeoman.app %>/templates/**/*.hbs',
                 tasks: ['emberTemplates']
             },
+
             neuter: {
                 files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
                 tasks: ['neuter']
             },
+
             livereload: {
                 options: {
                     livereload: LIVERELOAD_PORT
@@ -47,6 +49,7 @@ module.exports = function (grunt) {
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
                 ]
             },
+
             express: {
               files:  [ '<%= yeoman.server %>/main.js' ],
                 tasks:  [ 'express:dev' ],
@@ -55,12 +58,14 @@ module.exports = function (grunt) {
                 }
             }
         },
+
         express: {
           dev: {
             options: {
               script: 'server/main.js',
             }
           },
+
           debug: {
             options: {
               script: 'server/main.js',
@@ -68,12 +73,14 @@ module.exports = function (grunt) {
             }
           }
         },
+
         connect: {
             options: {
                 port: 9000,
                 // change this to '0.0.0.0' to access the server from outside
                 hostname: 'localhost'
             },
+
             livereload: {
                 options: {
                     middleware: function (connect) {
@@ -85,6 +92,7 @@ module.exports = function (grunt) {
                     }
                 }
             },
+
             test: {
                 options: {
                     middleware: function (connect) {
@@ -95,6 +103,7 @@ module.exports = function (grunt) {
                     }
                 }
             },
+
             dist: {
                 options: {
                     middleware: function (connect) {
@@ -105,11 +114,13 @@ module.exports = function (grunt) {
                 }
             }
         },
+
         open: {
             server: {
                 path: 'http://localhost:<%= connect.options.port %>'
             }
         },
+
         clean: {
             dist: {
                 files: [{
@@ -123,6 +134,7 @@ module.exports = function (grunt) {
             },
             server: '.tmp'
         },
+
         jshint: {
             options: {
                 jshintrc: '.jshintrc'
@@ -134,6 +146,7 @@ module.exports = function (grunt) {
                 'test/{,*/}*.js'
             ]
         },
+
         mocha: {
             all: {
                 options: {
@@ -142,6 +155,7 @@ module.exports = function (grunt) {
                 }
             }
         },
+
         // not used since Uglify task does concat,
         // but still available if needed
         /*concat: {
@@ -153,6 +167,7 @@ module.exports = function (grunt) {
         /*uglify: {
             dist: {}
         },*/
+
         rev: {
             dist: {
                 files: {
@@ -165,12 +180,14 @@ module.exports = function (grunt) {
                 }
             }
         },
+
         useminPrepare: {
             html: '<%= yeoman.app %>/index.html',
             options: {
                 dest: '<%= yeoman.dist %>'
             }
         },
+
         usemin: {
             html: ['<%= yeoman.dist %>/{,*/}*.html'],
             css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
@@ -178,6 +195,7 @@ module.exports = function (grunt) {
                 dirs: ['<%= yeoman.dist %>']
             }
         },
+
         imagemin: {
             dist: {
                 files: [{
@@ -188,6 +206,7 @@ module.exports = function (grunt) {
                 }]
             }
         },
+
         svgmin: {
             dist: {
                 files: [{
@@ -198,6 +217,7 @@ module.exports = function (grunt) {
                 }]
             }
         },
+
         cssmin: {
             dist: {
                 files: {
@@ -208,6 +228,7 @@ module.exports = function (grunt) {
                 }
             }
         },
+
         htmlmin: {
             dist: {
                 options: {
@@ -229,6 +250,7 @@ module.exports = function (grunt) {
                 }]
             }
         },
+
         // Put files not handled in other tasks here
         copy: {
             dist: {
@@ -246,9 +268,10 @@ module.exports = function (grunt) {
                 }]
             }
         },
+
         concurrent: {
             server: [
-                'watch'                
+                'emberTemplates'                
             ],
             test: [
                 'emberTemplates'
@@ -260,6 +283,7 @@ module.exports = function (grunt) {
                 'htmlmin'
             ]
         },
+
         emberTemplates: {
             options: {
                 templateName: function (sourceFile) {
@@ -269,10 +293,11 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    'public/scripts/compiled-templates.js': '<%= yeoman.app %>/templates/{,*/}*.hbs'
+                    '.tmp/scripts/compiled-templates.js': '<%= yeoman.app %>/templates/{,*/}*.hbs'
                 }
             }
         },
+
         neuter: {
             app: {
                 options: {
@@ -281,7 +306,7 @@ module.exports = function (grunt) {
                     }
                 },
                 src: '<%= yeoman.app %>/scripts/app.js',
-                dest: 'public/scripts/combined-scripts.js'
+                dest: '.tmp/scripts/combined-scripts.js'
             }
         }
     });
@@ -290,7 +315,7 @@ module.exports = function (grunt) {
         if (target === 'dist') {
             return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
         }
-
+        /*
         if (target === 'debug') {
           grunt.task.run([
             'express:debug'
@@ -300,13 +325,16 @@ module.exports = function (grunt) {
           grunt.task.run([
             'express:dev'
           ]);  
-        }
+        }*/
 
         grunt.task.run([
             'clean:server',
+            'concurrent:server',
             'neuter:app',
-            'watch',
-            'open'
+            'connect:livereload',
+            'open',
+            'express:dev',
+            'watch'
         ]);
     });
 

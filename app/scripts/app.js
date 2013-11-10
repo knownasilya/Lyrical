@@ -1,7 +1,9 @@
-var App = window.App = Ember.Application.create({
+var App = Ember.Application.create({
   LOG_TRANSITIONS: true,
   LOG_TRANSITIONS_INTERNAL: true
 });
+
+window.App = App;
 
 /* Order and include as you please. */
 require('scripts/controllers/*');
