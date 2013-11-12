@@ -1,7 +1,9 @@
 <div class="slides">
   {{#each controller}}
     <section>
-      <h4>{{title}}</h4>
+      <h4>
+        {{#link-to 'song' this}}{{title}}{{/link-to}}
+      </h4>
       <section class="lyric">
         {{#each lyric}}
           <p>{{this}}</p>

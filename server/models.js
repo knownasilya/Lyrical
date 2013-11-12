@@ -11,10 +11,13 @@ var mongodb = require('mongodb'),
   Feature,
   User;
 
-console.dir(conf);
-
 // Open and Authenticate Database connection
 mongoClient.open(function (error, mongoClient) {
+  if (error) {
+    console.log(error);
+    return;
+  }
+
   var db = mongoClient.db(conf.db.name);
 
   db.authenticate(conf.db.user, conf.db.pass, function (error) {
@@ -34,7 +37,7 @@ store = function (collectionName) {
   
   getCollection = function (callback) {    
     // Open/Auth DB connection
-    mongoClient.db(dbName).collection(collectionName, function (error, collection) {
+    mongoClient.db(conf.db.name).collection(collectionName, function (error, collection) {
       if (error) { 
         callback(error);
       }

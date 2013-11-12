@@ -6,7 +6,9 @@ var express = require('express'),
   store = models.store,
   Song = store('Songs'),
   app = express(),
-  logger;
+  allowedCORSDomains = ['http://localhost:9000'],
+  logger,
+  allowCORS;
 
 
 // Setup logging to a file as json.
@@ -21,11 +23,20 @@ logger = new (winston.Logger)({
   ]
 });
 
+allowCORS = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', allowedCORSDomains);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  
+  next();
+};
+
 // GZIP static contents before sending
 //app.use(express.compress());
 app.use(express.logger());
 app.use(express.bodyParser());
 app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+app.use(allowCORS);
 // Static files
 app.use(express.static(path.join(__dirname, '../public')));
 
