@@ -315,7 +315,15 @@ module.exports = function (grunt) {
         if (target === 'dist') {
             return grunt.task.run(['build', 'open', 'connect:dist:keepalive']);
         }
-        /*
+
+        grunt.task.run([
+            'clean:server',
+            'concurrent:server',
+            'neuter:app',
+            'connect:livereload',
+            'open'
+        ]);
+        
         if (target === 'debug') {
           grunt.task.run([
             'express:debug'
@@ -325,17 +333,9 @@ module.exports = function (grunt) {
           grunt.task.run([
             'express:dev'
           ]);  
-        }*/
+        }
 
-        grunt.task.run([
-            'clean:server',
-            'concurrent:server',
-            'neuter:app',
-            'connect:livereload',
-            'open',
-            'express:dev',
-            'watch'
-        ]);
+        grunt.task.run(['watch']);
     });
 
     grunt.registerTask('test', [

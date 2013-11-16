@@ -23,5 +23,23 @@ App.SongSerializer = DS.RESTSerializer.extend({
 
 App.Song = DS.Model.extend({
   title: DS.attr('string'),
-  lyric: DS.attr('array') 
+  lyric: DS.attr('array'),
+  ordinals: DS.attr('array'),
+
+  orderedLyric: function () {
+    var lyric = this.get('lyric'),
+      ordinals = this.get('ordinals'),
+      result = [];
+
+    if (ordinals && lyric) {
+      ordinals.forEach(function (item) {
+        result.pushObject(lyric.get(item));
+      });
+    }
+    else if (lyric) {
+      result = lyric;
+    }
+
+    return result;
+  }.property('lyric', 'ordinals')
 });

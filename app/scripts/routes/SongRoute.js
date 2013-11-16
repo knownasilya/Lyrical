@@ -1,7 +1,5 @@
 App.SongRoute = Ember.Route.extend({
   model: function (params) {
-    return Ember.Object.create({
-      id: params.song_id
-    });
+    return this.store.find('song', params.song_id);
   }
 });

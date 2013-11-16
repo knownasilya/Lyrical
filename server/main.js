@@ -45,8 +45,22 @@ app.get('/', function (req, res) {
 });
 
 app.get('/api/songs', function (req, res) {
-  Song.find(function (error, songs) {
+  Song.find().then(function (songs) {
     res.json({ songs: songs });
+  },
+  function (error) {
+    res.json({ error: error });
+  });
+});
+
+app.get('/api/songs/:id', function (req, res) {
+  var id = req.param('id');
+
+  Song.find(id).then(function (song) {
+    res.json({ song: song });
+  },
+  function (error) {
+    res.json({ error: error });
   });
 });
 

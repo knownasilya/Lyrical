@@ -1,5 +1,7 @@
 var mongodb = require('mongodb'),
+  Q = require('q'),
   conf = require('./config'),
+  ObjectID = mongodb.ObjectID,
   Db = mongodb.Db,
   Server = mongodb.Server,
   MongoClient = mongodb.MongoClient,
@@ -47,22 +49,41 @@ store = function (collectionName) {
     });
   };
   
-  find = function (callback) {
+  find = function (id) {
+    var deferred = Q.defer();
+
     getCollection(function (error, collection) {
+      var result;
+
       if (error) {
-        callback(error);
+        deferred.reject(error);
       }
       else {
-        collection.find().toArray(function (error, results) {
-          if (error) {
-            callback(error);
-          }
-          else {
-            callback(null, results);
-          }
-        });
+        if (id) {
+          id = new ObjectID(id);
+          result = collection.findOne({ _id: id }, function (error, song) {
+            if (error) {
+              deferred.reject(error);
+            }
+            else {
+              deferred.resolve(song);
+            }
+          });
+        }
+        else {
+          collection.find().toArray(function (error, results) {
+            if (error) {
+              deferred.reject(error);
+            }
+            else {
+              deferred.resolve(results);
+            }
+          });
+        }
       }
     });
+
+    return deferred.promise;
   };
   
   return {
