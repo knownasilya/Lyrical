@@ -1,7 +1,46 @@
-node_modules
-temp
-dist
-.sass-cache
+########################
+# sails
+########################
+.sails
+.waterline
+.rigging
 .tmp
-app/bower_components
-config.yaml
+
+
+########################
+# node.js / npm
+########################
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+
+pids
+logs
+results
+
+node_modules
+
+npm-debug.log
+
+
+########################
+# misc / editors
+########################
+*~
+*#
+.DS_STORE
+.netbeans
+nbproject
+.idea
+.swo
+.sqp
+
+########################
+# local config
+########################
+config/local.js

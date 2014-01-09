@@ -1,9 +1,0 @@
-#application,
-#song {
-  position: relative;
-  height: 100%;
-}
-
-#song .slides section p {
-  white-space: pre-line;
-}

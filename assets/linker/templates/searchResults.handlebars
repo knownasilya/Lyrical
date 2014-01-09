@@ -1,0 +1,14 @@
+{{#if content.length}}
+  {{#if hasOneResult}}
+    There is one result.
+  {{else}}
+    There are {{content.length}} results.
+  {{/if}}
+
+  {{#each content}}
+    <h1>{{title}}</h1>
+  {{/each}}
+{{else}}
+  There are no results.
+{{/if}}
+
