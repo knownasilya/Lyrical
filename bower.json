@@ -2,13 +2,12 @@
   "name": "Lyrical",
   "version": "0.0.0",
   "dependencies": {
-    "ember": "1.2.0",
-    "ember-data": "1.0.0-beta.4",
-    "reveal.js": "https://github.com/hakimel/reveal.js.git#c4d7b1b93fb06d152fe44d4a5ae42bfa0257e4ea",
+    "ember": "~1.4.0",
+    "ember-data": "~1.0.0-beta.6",
     "jquery": "1.10.2",
-    "handlebars": "1.1.2"
+    "handlebars": "~1.3.0"
   },
   "devDependencies": {
-    "ember-mocha-adapter": "0.1.2"
+    "ember-mocha-adapter": "~0.1.2"
   }
 }

@@ -17,14 +17,17 @@
 
 module.exports = {
     
+  index: function (req, res) {
+    Song.find().then(function (songs) {
+      res.json({ songs: songs });
+    });
+  },
   
   search: function (req, res) {
-    Song.find({ title: req.param('id') }).exec(function (err, songs) {
-      if (err) {
-        return res.send(err, 500);
-      }
-
-      return res.json(songs);
+    Song.find({ title: req.query.title }).then(function (songs) {
+      return res.json({ songs: songs });
+    }, function (error) {
+      return res.send(error, 500);
     });
   },
 

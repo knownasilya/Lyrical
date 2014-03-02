@@ -80,8 +80,8 @@ module.exports = function (grunt) {
    * Client-side HTML templates are injected using the sources below
    * The ordering of these templates shouldn't matter.
    * (uses Grunt-style wildcard/glob/splat expressions)
-   * 
-   * By default, Sails uses JST templates and precompiles them into 
+   *
+   * By default, Sails uses JST templates and precompiles them into
    * functions for you.  If you want to use jade, handlebars, dust, etc.,
    * edit the relevant sections below.
    */
@@ -118,12 +118,12 @@ module.exports = function (grunt) {
   /////////////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////////////
 
-  // Modify css file injection paths to use 
+  // Modify css file injection paths to use
   cssFilesToInject = cssFilesToInject.map(function (path) {
     return '.tmp/public/' + path;
   });
 
-  // Modify js file injection paths to use 
+  // Modify js file injection paths to use
   jsFilesToInject = jsFilesToInject.map(function (path) {
     return '.tmp/public/' + path;
   });
